@@ -503,7 +503,7 @@ namespace SampleApp
             // disable all settings controls except "Stop" button
             EnableControls(false);
 
-            AccordGenetic.Wrapper.OptimisationWrap wrap = new AccordGenetic.Wrapper.OptimisationWrap(
+            AccordGenetic.Wrapper.Optimisation1DWrap wrap = new AccordGenetic.Wrapper.Optimisation1DWrap(
                 populationSize: int.TryParse(populationSizeBox.Text, out int result1) ? Math.Max(10, Math.Min(100, result1)) : 40,
                 chromosomeLength:int.TryParse(chromosomeLengthBox.Text, out int result3) ? Math.Max(64, result3) : 32, 
                 userFunction:userFunction, 
@@ -519,7 +519,7 @@ namespace SampleApp
 
 
         // Worker thread
-        void SearchSolution(OptimisationWrap wrap)
+        void SearchSolution(Optimisation1DWrap wrap)
         {
 
             iterations = int.TryParse(iterationsBox.Text, out int result2) ? Math.Max(1, result2) : 100;

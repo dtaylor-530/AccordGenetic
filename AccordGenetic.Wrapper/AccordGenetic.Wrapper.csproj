@@ -56,7 +56,8 @@
   <ItemGroup>
     <Compile Include="ApproximationWrap.cs" />
     <Compile Include="IGeneticWrap.cs" />
-    <Compile Include="OptimisationWrap.cs" />
+    <Compile Include="Optimisation1DWrap.cs" />
+    <Compile Include="Optimisation2DWrap.cs" />
     <Compile Include="Result.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="TimeSeriesWrap.cs" />

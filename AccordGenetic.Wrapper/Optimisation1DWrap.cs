@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AccordGenetic.Wrapper
 {
-    public class OptimisationWrap : IGeneticWrap
+    public class Optimisation1DWrap : IGeneticWrap
     {
         public Population Population { get; set; }
         bool _showOnlyBest;
@@ -18,7 +18,7 @@ namespace AccordGenetic.Wrapper
         OptimizationFunction1D _userFunction;
         private int _populationSize;
 
-        public OptimisationWrap(int populationSize, int chromosomeLength, OptimizationFunction1D userFunction, int selectionMethod, int optimizationMode, bool showOnlyBest)
+        public Optimisation1DWrap(int populationSize, int chromosomeLength, OptimizationFunction1D userFunction, int selectionMethod, int optimizationMode, bool showOnlyBest)
         {
             _showOnlyBest = showOnlyBest;
             _userFunction = userFunction;

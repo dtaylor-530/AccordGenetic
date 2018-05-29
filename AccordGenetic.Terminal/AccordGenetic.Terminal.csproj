@@ -114,13 +114,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Applications\GAFormTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Applications\Optimization.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Applications\SettingsDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GAFormTemplate.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
