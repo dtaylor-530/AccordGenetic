@@ -31,13 +31,12 @@ namespace SampleApp
         private UserFunction userFunction = new UserFunction();
 
         private int chromosomeLength = 32;
-
         private int optimizationMode = 0;
-
+        private bool showOnlyBest = false;
 
         #region GUI
 
-        private bool showOnlyBest = false;
+
         private Accord.Controls.Chart chart;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
@@ -401,22 +400,6 @@ namespace SampleApp
 
 
 
-        // Delegates to enable async calls for setting controls properties
-        private delegate void SetTextCallback(System.Windows.Forms.Control control, string text);
-
-        // Thread safe updating of control's text property
-        private void SetText(System.Windows.Forms.Control control, string text)
-        {
-            if (control.InvokeRequired)
-            {
-                SetTextCallback d = new SetTextCallback(SetText);
-                Invoke(d, new object[] { control, text });
-            }
-            else
-            {
-                control.Text = text;
-            }
-        }
 
 
         // Update settings controls
@@ -541,15 +524,7 @@ namespace SampleApp
 
             iterations = int.TryParse(iterationsBox.Text, out int result2) ? Math.Max(1, result2) : 100;
 
-            var progressHandler = new Progress<KeyValuePair<int, AccordGenetic.Wrapper.Result>>(kvp =>
-            {
-                // update info
-                chart.UpdateDataSeries("solution", kvp.Value.Output);
-                SetText(currentIterationBox, kvp.Key.ToString());
-                SetText(currentValueBox, kvp.Value.BestSolution);
-            });
-
-
+            var progressHandler = new Progress<KeyValuePair<int, AccordGenetic.Wrapper.Result>>(kvp => ProgressUpdate(kvp));
 
             Task tsk = Task.Run(() => wrap.RunMultipleEpochs(iterations, cts.Token, progressHandler));
             tsk.ContinueWith(
@@ -567,18 +542,23 @@ namespace SampleApp
                    else if (t.IsCanceled)
                    {
                        //MessageBox.Show("Cancelled");
-           
                    }
-
                    // completed successfully
 
-                   // prevents a cross-threading error when closing the window;
-                   Task.WaitAll();
-
+                   if(!IsClosed)
                    EnableControls(true);
                });
 
 
+        }
+
+
+        public void ProgressUpdate(KeyValuePair<int, AccordGenetic.Wrapper.Result> kvp)
+        {
+            // update info
+            chart.UpdateDataSeries("solution", kvp.Value.Output);
+            SetText(currentIterationBox, kvp.Key.ToString());
+            SetText(currentValueBox, kvp.Value.BestSolution);
         }
 
 

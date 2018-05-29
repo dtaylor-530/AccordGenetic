@@ -20,9 +20,7 @@ namespace AccordGenetic.Wrapper
             BestSolution = solution;
             Output = output;
         }
-        //SetText(currentIterationBox, i.ToString());
-        //SetText(currentLearningErrorBox, learningError.ToString("F3"));
-        //SetText(currentPredictionErrorBox, predictionError.ToString("F3"));
+
 
     }
 }

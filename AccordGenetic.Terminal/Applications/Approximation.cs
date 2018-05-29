@@ -55,8 +55,6 @@ namespace SampleApp
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox iterationsBox;
         private System.Windows.Forms.Label label4;
-        //private System.Windows.Forms.Button startButton;
-        //private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox currentIterationBox;
@@ -414,9 +412,14 @@ namespace SampleApp
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
-
+       
         }
         #endregion
+
+
+
+
+
 
 
         /// <summary>
@@ -425,30 +428,12 @@ namespace SampleApp
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            bool isDisposed = true;
             if (disposing && (components != null))
             {
                 components.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-
-
-        // Delegates to enable async calls for setting controls properties
-        private delegate void SetTextCallback(System.Windows.Forms.Control control, string text);
-
-        // Thread safe updating of control's text property
-        private void SetText(System.Windows.Forms.Control control, string text)
-        {
-            if (control.InvokeRequired)
-            {
-                SetTextCallback d = new SetTextCallback(SetText);
-                Invoke(d, new object[] { control, text });
-            }
-            else
-            {
-                control.Text = text;
-            }
         }
 
 
@@ -548,6 +533,7 @@ namespace SampleApp
                 EnableCallback d = new EnableCallback(EnableControls);
                 Invoke(d, new object[] { enable });
             }
+
             else
             {
                 loadDataButton.Enabled = enable;
@@ -594,18 +580,7 @@ namespace SampleApp
         {
             iterations = int.TryParse(iterationsBox.Text, out int result2) ? Math.Max(1, result2) : 100;
 
-            var progressHandler = new Progress<KeyValuePair<int, AccordGenetic.Wrapper.Result>>(kvp =>
-            {
-                // update info              
-                var error = wrap.EvaluateError();
-                chart.UpdateDataSeries("solution", kvp.Value.Output);
-                SetText(currentIterationBox, kvp.Key.ToString());
-
-
-                SetText(currentErrorBox, error.Prediction.ToString("F3"));
-
-                SetText(solutionBox, kvp.Value.BestSolution.ToString());
-            });
+            var progressHandler = new Progress<KeyValuePair<int, AccordGenetic.Wrapper.Result>>(kvp => ProgressUpdate(kvp, wrap));
 
             cts = new CancellationTokenSource();
 
@@ -629,15 +604,32 @@ namespace SampleApp
                    else
                    {
                        if (!cts.IsCancellationRequested)
-                       { }
-                       // prevents a threading error when closing the window;
-                       Task.WaitAll();
+                       { /* final update*/}
+        
                    }
-                   // completed successfully
-                   EnableControls(true);
+                   // completed successfully/ check if closed button has been clicked
+                   if (!IsClosed)
+                   {
+                       EnableControls(true);
+                   }
+  
                });
 
 
+        }
+
+
+
+        public void ProgressUpdate(KeyValuePair<int, AccordGenetic.Wrapper.Result> kvp, ApproximationWrap wrap)
+        {
+            // update info
+        
+            var error = wrap.EvaluateError();
+            chart.UpdateDataSeries("solution", kvp.Value.Output);
+            SetText(currentIterationBox, kvp.Key.ToString());
+
+            SetText(currentErrorBox, error.Prediction.ToString("F3"));
+            SetText(solutionBox, kvp.Value.BestSolution.ToString());
         }
     }
 }

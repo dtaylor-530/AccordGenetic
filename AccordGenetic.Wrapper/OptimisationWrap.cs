@@ -31,11 +31,8 @@ namespace AccordGenetic.Wrapper
                  );
             // set optimization mode
             userFunction.Mode = (optimizationMode == 0) ? OptimizationFunction1D.Modes.Maximization : OptimizationFunction1D.Modes.Minimization;
-            // iterations
-            int i = 1;
-            // solution
-            _solution = new double[(showOnlyBest) ? 1 : populationSize, 2];
 
+            _solution = new double[(showOnlyBest) ? 1 : populationSize, 2];
 
 
         }

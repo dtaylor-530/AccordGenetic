@@ -536,67 +536,12 @@ namespace SampleApp
         #endregion
 
 
-
-
-
-        // Delegates to enable async calls for setting controls properties
-        private delegate void SetTextCallback(System.Windows.Forms.Control control, string text);
-        private delegate void AddSubItemCallback(System.Windows.Forms.ListView control, int item, string subitemText);
-
-        // Thread safe updating of control's text property
-        private void SetText(System.Windows.Forms.Control control, string text)
-        {
-            if (control.InvokeRequired)
-            {
-                SetTextCallback d = new SetTextCallback(SetText);
-                Invoke(d, new object[] { control, text });
-            }
-            else
-            {
-                control.Text = text;
-            }
-        }
-
-        // Thread safe adding of subitem to list control
-        private void AddSubItem(System.Windows.Forms.ListView control, int item, string subitemText)
-        {
-
-            if (control.InvokeRequired)
-            {
-                //AddSubItemCallback d = new AddSubItemCallback(AddSubItem);
-                //Invoke(d, new object[] { control, item, subitemText });
-            }
-            //else if (control.Items.Count == 0)
-            //{
-
-            //}
-            else
-            {
-                control.Items[item].SubItems.Add(subitemText);
-            }
-        }
-
-        //// On main form closing
-        //private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    // check if worker thread is running
-        //    if ((workerThread != null) && (workerThread.IsAlive))
-        //    {
-        //        needToStop = true;
-        //        while (!workerThread.Join(100))
-        //            Application.DoEvents();
-        //    }
-        //}
-
-        bool isDisposed;
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            isDisposed = true;
-
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -708,8 +653,10 @@ namespace SampleApp
         // Enable/disale controls (safe for threading)
         private void EnableControls(bool enable)
         {
-            if (InvokeRequired & !isDisposed)
+            if (InvokeRequired & !IsDisposed)
             {
+                
+
                 EnableCallback d = new EnableCallback(EnableControls);
                 Invoke(d, new object[] { enable });
             }
@@ -854,22 +801,12 @@ namespace SampleApp
             iterations = int.TryParse(iterationsBox.Text, out int result2) ? Math.Max(1, result2) : 100;
 
             double[,] output = null;
-            string bestChromoSome = "";
+ 
 
             var progressHandler = new Progress<KeyValuePair<int, AccordGenetic.Wrapper.Result>>(kvp =>
              {
                  output = kvp.Value.Output;
-                 chart.UpdateDataSeries("solution", output);
-                 bestChromoSome = kvp.Value.BestSolution;
-                 SetText(solutionBox, bestChromoSome);
-
-                 var error = wrap.EvaluateError();
-
-                 // update info
-                 SetText(currentIterationBox, kvp.Key.ToString());
-                 SetText(currentLearningErrorBox, error.Learning.ToString("F3"));
-                 SetText(currentPredictionErrorBox, error.Prediction.ToString("F3"));
-
+                 ProgressUpdate(kvp,output,wrap);
              });
 
             cts = new CancellationTokenSource();
@@ -900,13 +837,30 @@ namespace SampleApp
                                AddSubItem(dataList, j, output[k, 1].ToString());
                            }
                        // prevents a cross-threading error when closing the window;
-                       Task.WaitAll();
+                       tsk.Wait();
                    }
+                   if(!IsClosed)
                    EnableControls(true);
                });
 
         }
 
 
+        public void ProgressUpdate(KeyValuePair<int, AccordGenetic.Wrapper.Result> kvp,double[,] output, TimeSeriesWrap wrap)
+        {
+            // update info
+            chart.UpdateDataSeries("solution", output);
+            var bestChromoSome = kvp.Value.BestSolution;
+            SetText(solutionBox, bestChromoSome);
+
+            var error = wrap.EvaluateError();
+
+            // update info
+            SetText(currentIterationBox, kvp.Key.ToString());
+            SetText(currentLearningErrorBox, error.Learning.ToString("F3"));
+            SetText(currentPredictionErrorBox, error.Prediction.ToString("F3"));
+        }
+
+    
     }
 }

@@ -57,7 +57,7 @@
     <Compile Include="ApproximationWrap.cs" />
     <Compile Include="IGeneticWrap.cs" />
     <Compile Include="OptimisationWrap.cs" />
-    <Compile Include="Solution.cs" />
+    <Compile Include="Result.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="TimeSeriesWrap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -31,8 +31,7 @@ namespace AccordGenetic.Wrapper
                  fitness,
                  (selectionMethod == 0) ? (ISelectionMethod)new EliteSelection() : (selectionMethod == 1) ? (ISelectionMethod)new RankSelection() : (ISelectionMethod)new RouletteWheelSelection());
 
-            // iterations
-  
+
             // solution array
             solution = new double[50, 2];
             input = new double[6] { 0, 1, 2, 3, 5, 7 };
