@@ -9,7 +9,7 @@ Seperated the algorithm's logic from the ui's and moved it to a seperate project
 Linked,  via an interface, the new 'wrapper' classes.
 </li>
 <li>
-Switched from using threads directly to using the Task-Parrellel-Library for running the algos.
+Switched from using threads directly to using the Task-Parrallel-Library for running the algos.
 </li>
 <li>
 Created a base ui form for the 'genetic' forms to inherit from.
