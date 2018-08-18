@@ -19,4 +19,28 @@ namespace AccordGenetic.Wrapper
         }
     }
 
+
+
+    public class DefaultFunction2D : OptimizationFunction2D
+    {
+        public DefaultFunction2D() : base(new Range(0, 255), new Range(0, 255)) { }
+
+        public override double OptimizationFunction(double x, double y)
+        {
+            return Math.Cos(x / 23) * Math.Sin(y / 50) + 2;
+        }
+    }
+
+    public class UserFunction2D : OptimizationFunction2D
+    {
+
+        Func<double, double, double> _func;
+        public UserFunction2D(Func<double, double, double> func) : base(new Range(0, 50), new Range(0, 50)) { _func = func; }
+
+
+        public override double OptimizationFunction(double x, double y)
+        {
+            return _func(x, y);
+        }
+    }
 }

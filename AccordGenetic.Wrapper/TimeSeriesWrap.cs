@@ -47,7 +47,7 @@ namespace AccordGenetic.Wrapper
                 (geneticMethod == 0) ? (IChromosome)new GPTreeChromosome(gene) : (IChromosome)new GEPChromosome(gene, headLength),
                 fitness,
                 (selectionMethod == 0) ? (ISelectionMethod)new EliteSelection() : (selectionMethod == 1) ? (ISelectionMethod)new RankSelection() : (ISelectionMethod)new RouletteWheelSelection());
-
+  
 
             solutionSize = _data.Length - _windowSize;
             solution = new double[solutionSize, 2];

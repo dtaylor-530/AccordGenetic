@@ -18,7 +18,7 @@ namespace AccordGenetic.Wrapper
         OptimizationFunction1D _userFunction;
         private int _populationSize;
 
-        public Optimisation1DWrap(int populationSize, int chromosomeLength, OptimizationFunction1D userFunction, int selectionMethod, int optimizationMode, bool showOnlyBest)
+        public Optimisation1DWrap(int populationSize, int chromosomeLength, OptimizationFunction1D userFunction, int selectionMethod, OptimizationFunction2D.Modes optimizationMode, bool showOnlyBest)
         {
             _showOnlyBest = showOnlyBest;
             _userFunction = userFunction;

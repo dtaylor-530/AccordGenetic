@@ -505,14 +505,14 @@ namespace SampleApp
 
             AccordGenetic.Wrapper.Optimisation1DWrap wrap = new AccordGenetic.Wrapper.Optimisation1DWrap(
                 populationSize: int.TryParse(populationSizeBox.Text, out int result1) ? Math.Max(10, Math.Min(100, result1)) : 40,
-                chromosomeLength:int.TryParse(chromosomeLengthBox.Text, out int result3) ? Math.Max(64, result3) : 32, 
-                userFunction:userFunction, 
-                selectionMethod: selectionBox.SelectedIndex, 
-                optimizationMode: modeBox.SelectedIndex, 
+                chromosomeLength: int.TryParse(chromosomeLengthBox.Text, out int result3) ? Math.Max(64, result3) : 32,
+                userFunction: userFunction,
+                selectionMethod: selectionBox.SelectedIndex,
+                optimizationMode: ((OptimizationFunction2D.Modes)modeBox.SelectedIndex),
                 showOnlyBest: onlyBestCheck.Checked);
 
             SearchSolution(wrap);
-            
+
             // enable settings controls
             EnableControls(true);
         }
@@ -545,8 +545,8 @@ namespace SampleApp
                    }
                    // completed successfully
 
-                   if(!IsClosed)
-                   EnableControls(true);
+                   if (!IsClosed)
+                       EnableControls(true);
                });
 
 
