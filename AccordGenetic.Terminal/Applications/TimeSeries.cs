@@ -21,7 +21,7 @@ using Accord.Controls;
 using Accord;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using AccordGenetic.Wrapper;
+using AccordGenetic.Wrap;
 
 namespace SampleApp
 {
@@ -610,7 +610,7 @@ namespace SampleApp
 
                 // update list and chart
                 UpdateDataListView();
-                chart.RangeX = new Range(0, data.Length - 1);
+                chart.RangeX = new Accord.Range(0, data.Length - 1);
                 chart.UpdateDataSeries("data", dataToShow);
                 chart.UpdateDataSeries("solution", null);
                 // set delimiters
@@ -777,7 +777,7 @@ namespace SampleApp
             EnableControls(false);
 
 
-            AccordGenetic.Wrapper.TimeSeriesWrap wrap = new AccordGenetic.Wrapper.TimeSeriesWrap(
+            AccordGenetic.Wrap.TimeSeriesWrap wrap = new AccordGenetic.Wrap.TimeSeriesWrap(
                 data: data,
                 windowSize: windowSize,
                 populationSize: int.TryParse(populationSizeBox.Text, out int result1) ? Math.Max(10, Math.Min(100, result1)) : 40,
@@ -796,14 +796,14 @@ namespace SampleApp
 
 
 
-        private void SearchSolution(AccordGenetic.Wrapper.TimeSeriesWrap wrap)
+        private void SearchSolution(AccordGenetic.Wrap.TimeSeriesWrap wrap)
         {
             iterations = int.TryParse(iterationsBox.Text, out int result2) ? Math.Max(1, result2) : 100;
 
             double[,] output = null;
  
 
-            var progressHandler = new Progress<KeyValuePair<int, AccordGenetic.Wrapper.Result>>(kvp =>
+            var progressHandler = new Progress<KeyValuePair<int, AccordGenetic.Wrap.Result>>(kvp =>
              {
                  output = kvp.Value.Output;
                  ProgressUpdate(kvp,output,wrap);
@@ -846,7 +846,7 @@ namespace SampleApp
         }
 
 
-        public void ProgressUpdate(KeyValuePair<int, AccordGenetic.Wrapper.Result> kvp,double[,] output, TimeSeriesWrap wrap)
+        public void ProgressUpdate(KeyValuePair<int, AccordGenetic.Wrap.Result> kvp,double[,] output, TimeSeriesWrap wrap)
         {
             // update info
             chart.UpdateDataSeries("solution", output);

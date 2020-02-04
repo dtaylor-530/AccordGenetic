@@ -18,7 +18,7 @@ using AForge;
 using Accord.Genetic;
 using Accord.Controls;
 using Accord;
-using AccordGenetic.Wrapper;
+using AccordGenetic.Wrap;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -442,7 +442,7 @@ namespace SampleApp
         {
             try
             {
-                userFunction.Range = new Range(float.Parse(minXBox.Text), userFunction.Range.Max);
+                userFunction.Range = new Accord.Range(float.Parse(minXBox.Text), userFunction.Range.Max);
                 UpdateChart();
             }
             catch
@@ -455,7 +455,7 @@ namespace SampleApp
         {
             try
             {
-                userFunction.Range = new Range(userFunction.Range.Min, float.Parse(maxXBox.Text));
+                userFunction.Range = new Accord.Range(userFunction.Range.Min, float.Parse(maxXBox.Text));
                 UpdateChart();
             }
             catch
@@ -503,7 +503,7 @@ namespace SampleApp
             // disable all settings controls except "Stop" button
             EnableControls(false);
 
-            AccordGenetic.Wrapper.Optimisation1DWrap wrap = new AccordGenetic.Wrapper.Optimisation1DWrap(
+            AccordGenetic.Wrap.Optimisation1DWrap wrap = new AccordGenetic.Wrap.Optimisation1DWrap(
                 populationSize: int.TryParse(populationSizeBox.Text, out int result1) ? Math.Max(10, Math.Min(100, result1)) : 40,
                 chromosomeLength: int.TryParse(chromosomeLengthBox.Text, out int result3) ? Math.Max(64, result3) : 32,
                 userFunction: userFunction,
@@ -524,7 +524,7 @@ namespace SampleApp
 
             iterations = int.TryParse(iterationsBox.Text, out int result2) ? Math.Max(1, result2) : 100;
 
-            var progressHandler = new Progress<KeyValuePair<int, AccordGenetic.Wrapper.Result>>(kvp => ProgressUpdate(kvp));
+            var progressHandler = new Progress<KeyValuePair<int, AccordGenetic.Wrap.Result>>(kvp => ProgressUpdate(kvp));
 
             Task tsk = Task.Run(() => wrap.RunMultipleEpochs(iterations, cts.Token, progressHandler));
             tsk.ContinueWith(
@@ -553,7 +553,7 @@ namespace SampleApp
         }
 
 
-        public void ProgressUpdate(KeyValuePair<int, AccordGenetic.Wrapper.Result> kvp)
+        public void ProgressUpdate(KeyValuePair<int, AccordGenetic.Wrap.Result> kvp)
         {
             // update info
             chart.UpdateDataSeries("solution", kvp.Value.Output);

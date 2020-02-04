@@ -21,7 +21,7 @@ using Accord.Controls;
 using Accord;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AccordGenetic.Wrapper;
+using AccordGenetic.Wrap;
 
 namespace SampleApp
 {
@@ -501,7 +501,7 @@ namespace SampleApp
 
                 // update list and chart
                 UpdateDataListView();
-                chart.RangeX = new Range(minX, maxX);
+                chart.RangeX = new Accord.Range(minX, maxX);
                 chart.UpdateDataSeries("data", dataToShow);
                 chart.UpdateDataSeries("solution", null);
                 // enable "Start" button
@@ -559,7 +559,7 @@ namespace SampleApp
             EnableControls(false);
             solutionBox.Text = string.Empty;
 
-            AccordGenetic.Wrapper.ApproximationWrap wrap = new AccordGenetic.Wrapper.ApproximationWrap(
+            AccordGenetic.Wrap.ApproximationWrap wrap = new AccordGenetic.Wrap.ApproximationWrap(
                data: dataToShow, 
               functionsSet: functionsSetBox.SelectedIndex,
                populationSize: int.TryParse(populationSizeBox.Text, out int result1) ? Math.Max(10, Math.Min(100, result1)) : 40, 
@@ -576,11 +576,11 @@ namespace SampleApp
 
 
         // Worker thread
-        void SearchSolution(AccordGenetic.Wrapper.ApproximationWrap wrap)
+        void SearchSolution(AccordGenetic.Wrap.ApproximationWrap wrap)
         {
             iterations = int.TryParse(iterationsBox.Text, out int result2) ? Math.Max(1, result2) : 100;
 
-            var progressHandler = new Progress<KeyValuePair<int, AccordGenetic.Wrapper.Result>>(kvp => ProgressUpdate(kvp, wrap));
+            var progressHandler = new Progress<KeyValuePair<int, AccordGenetic.Wrap.Result>>(kvp => ProgressUpdate(kvp, wrap));
 
             cts = new CancellationTokenSource();
 
@@ -620,7 +620,7 @@ namespace SampleApp
 
 
 
-        public void ProgressUpdate(KeyValuePair<int, AccordGenetic.Wrapper.Result> kvp, ApproximationWrap wrap)
+        public void ProgressUpdate(KeyValuePair<int, AccordGenetic.Wrap.Result> kvp, ApproximationWrap wrap)
         {
             // update info
         
