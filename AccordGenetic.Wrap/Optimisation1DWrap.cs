@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-namespace AccordGenetic.Wrapper
+namespace AccordGenetic.Wrap
 {
     public class Optimisation1DWrap : IGeneticWrap
     {
@@ -27,7 +27,7 @@ namespace AccordGenetic.Wrapper
             Population = new Population(populationSize,
                  new BinaryChromosome(chromosomeLength),
                  userFunction,
-                 (selectionMethod == 0) ? (ISelectionMethod)new EliteSelection() : (selectionMethod == 1) ? (ISelectionMethod)new RankSelection() : (ISelectionMethod)new RouletteWheelSelection()
+                 selectionMethod == 0 ? (ISelectionMethod)new EliteSelection() : (selectionMethod == 1) ? (ISelectionMethod)new RankSelection() : (ISelectionMethod)new RouletteWheelSelection()
                  );
             // set optimization mode
             userFunction.Mode = (optimizationMode == 0) ? OptimizationFunction1D.Modes.Maximization : OptimizationFunction1D.Modes.Minimization;

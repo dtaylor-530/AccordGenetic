@@ -8,10 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
-using Filter.Model;
 using System.Threading;
 
-namespace AccordGenetic.Wrapper
+namespace AccordGenetic.Wrap
 {
 
     public class TimeSeriesOptimisation2DWrap<ROutput> : Optimisation2DWrap<IEnumerable<KeyValuePair<DateTime, double>>, ROutput>
@@ -77,10 +76,9 @@ namespace AccordGenetic.Wrapper
 
             if (progress == null & token == default(CancellationToken))
                 w.RunMultipleEpochs(count);
-            else if (token == default(CancellationToken))
+            else 
                 w.RunMultipleEpochs(count, progress);
-            else
-                w.RunMultipleEpochs2(count, token, progress);
+        
         }
 
 
@@ -147,5 +145,13 @@ namespace AccordGenetic.Wrapper
 
 
 
+    }
+
+    public class IO<T>
+    {
+        public double[] Parameters { get; internal set; }
+        public double Score { get; internal set; }
+        public int Iteration { get; internal set; }
+        public object Output { get; internal set; }
     }
 }

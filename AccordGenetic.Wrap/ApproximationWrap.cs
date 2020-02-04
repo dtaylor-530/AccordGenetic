@@ -6,23 +6,28 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Accord.Math;
 
-namespace AccordGenetic.Wrapper
+namespace AccordGenetic.Wrap
 {
 
     public class ApproximationWrap : IGeneticWrap
     {
-        private double[,] _data;
+        /// <summary>
+        ///  True values.
+        /// </summary>
+        private readonly double[,] _data;
 
         public Population Population { get; set; }
-
-        double[,] solution;
-        double[] input;
+        double[] constants = { 1, 2, 3, 5, 7 };
+        readonly double[,] solution;
+  
         public ApproximationWrap(double[,] data, int functionsSet, int populationSize, int geneticMethod, int selectionMethod, float minRange, float lengthRange)
         {
             _data = data;
             // create fitness function
-            SymbolicRegressionFitness fitness = new SymbolicRegressionFitness(data, new double[] { 1, 2, 3, 5, 7 });
+            
+            SymbolicRegressionFitness fitness = new SymbolicRegressionFitness(data, constants);
             // create gene function
             IGPGene gene = (functionsSet == 0) ? (IGPGene)new SimpleGeneFunction(6) : (IGPGene)new ExtendedGeneFunction(6);
             // create population
@@ -34,7 +39,7 @@ namespace AccordGenetic.Wrapper
 
             // solution array
             solution = new double[50, 2];
-            input = new double[6] { 0, 1, 2, 3, 5, 7 };
+
 
             // calculate X values to be used with solution function
             for (int j = 0; j < 50; j++)
@@ -50,11 +55,17 @@ namespace AccordGenetic.Wrapper
             // get best solution
             string bestFunction = Population.BestChromosome.ToString();
 
+            var inputs = new double[7];
+            for (int i = 0; i < 5; i++)
+            {
+                inputs[i + 1] = constants[i];
+            }
             // calculate best function
             for (int j = 0; j < 50; j++)
             {
-                input[0] = solution[j, 0];
-                solution[j, 1] = PolishExpression.Evaluate(bestFunction, input);
+                inputs[0] = solution[j, 0];
+                var output = PolishExpression.Evaluate(bestFunction, inputs);
+                solution[j, 1] = output;
             }
 
             return new Result(solution, bestFunction);
@@ -70,11 +81,16 @@ namespace AccordGenetic.Wrapper
 
             // calculate error
             double error = 0.0;
+            var inputs = new double[7];
+            for (int i = 0; i < 5; i++)
+            {
+                inputs[i + 1] = constants[i];
+            }
 
             for (int j = 0, k = _data.GetLength(0); j < k; j++)
             {
-                input[0] = _data[j, 0];
-                error += Math.Abs(_data[j, 1] - PolishExpression.Evaluate(bestFunction, input));
+                inputs[0] = _data[j, 0];
+                error += Math.Abs(_data[j, 1] - PolishExpression.Evaluate(bestFunction, inputs));
             }
 
 

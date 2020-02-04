@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
@@ -8,12 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
-using Filter.Model;
-using System.Threading;
-using BackgroundWorkerExtended;
 using Accord.Genetic;
 
-namespace AccordGenetic.Wrapper
+namespace AccordGenetic.Wrap
 {
 
 
@@ -32,46 +28,46 @@ namespace AccordGenetic.Wrapper
     public class Optimisation2DWrap2
     {
 
-        public static BackgroundWorkerObservable<ChromosomeWrapper> Create<TInput, ROutput>(Func<double, double, ROutput> func, TInput input, Func<TInput, ROutput, double> error, int count = 10)
-        {      //function to optimise
-            Func<double, double, double> fc = (a, b) => error(input,func(a, b));
-            // wrap-up in class
-            var of = new UserFunction2D(fc);
+        //    public static BackgroundWorkerObservable<ChromosomeWrapper> Create<TInput, ROutput>(Func<double, double, ROutput> func, TInput input, Func<TInput, ROutput, double> error, int count = 10)
+        //    {      //function to optimise
+        //        Func<double, double, double> fc = (a, b) => error(input,func(a, b));
+        //        // wrap-up in class
+        //        var of = new UserFunction2D(fc);
 
-            var main = BuildGeneticProgram(of);
-            return new BackgroundWorkerObservable<ChromosomeWrapper>(main, Observable.Repeat((bool?)true, 1), Observable.Repeat(count, 1), Observable.Repeat(0, 1));
+        //        var main = BuildGeneticProgram(of);
+        //        return new BackgroundWorkerObservable<ChromosomeWrapper>(main, Observable.Repeat((bool?)true, 1), Observable.Repeat(count, 1), Observable.Repeat(0, 1));
 
-        }
+        //    }
 
-        //public static BackgroundWorkerObservable<Accord.Genetic.IChromosome> Create2<TInput, ROutput>(Func<double, double, ROutput> func, TInput input, Func<TInput, ROutput, double> error, int count = 10)
-        //{
+        //    //public static BackgroundWorkerObservable<Accord.Genetic.IChromosome> Create2<TInput, ROutput>(Func<double, double, ROutput> func, TInput input, Func<TInput, ROutput, double> error, int count = 10)
+        //    //{
 
-        //    var main = BuildFunction2(func, input, error);
-        //    return new BackgroundWorkerObservable<Accord.Genetic.IChromosome>(main, null, Observable.Repeat((bool?)true, 1), Observable.Repeat(count, 1), Observable.Repeat(0, 1));
+        //    //    var main = BuildFunction2(func, input, error);
+        //    //    return new BackgroundWorkerObservable<Accord.Genetic.IChromosome>(main, null, Observable.Repeat((bool?)true, 1), Observable.Repeat(count, 1), Observable.Repeat(0, 1));
 
-        //}
-
-
-        public static BackgroundWorkerObservableQueue<ChromosomeWrapper> Create<TInput, ROutput>(IObservable<Tuple<TInput, Func<double, double, ROutput>>> funcinput, Func<TInput, ROutput, double> error, int count = 10)
-        {
-
-            
-
-            var fc2 = funcinput.Select(_ =>
-            {
-                //function to optimise
-                Func<double, double, double> fc = (a, b) => error(_.Item1,_.Item2(a, b));
-                // wrap-up in class
-                var of = new UserFunction2D(fc);
-
-                var main = BuildGeneticProgram(of);
-                return main;
-            });
+        //    //}
 
 
-            return new BackgroundWorkerObservableQueue<ChromosomeWrapper>(fc2, Observable.Repeat((bool?)true, 1), Observable.Repeat(count, 1), Observable.Repeat(0, 1), Observable.Repeat(1, 1));
+        //    public static BackgroundWorkerObservableQueue<ChromosomeWrapper> Create<TInput, ROutput>(IObservable<Tuple<TInput, Func<double, double, ROutput>>> funcinput, Func<TInput, ROutput, double> error, int count = 10)
+        //    {
 
-        }
+
+
+        //        var fc2 = funcinput.Select(_ =>
+        //        {
+        //            //function to optimise
+        //            Func<double, double, double> fc = (a, b) => error(_.Item1,_.Item2(a, b));
+        //            // wrap-up in class
+        //            var of = new UserFunction2D(fc);
+
+        //            var main = BuildGeneticProgram(of);
+        //            return main;
+        //        });
+
+
+        //        return new BackgroundWorkerObservableQueue<ChromosomeWrapper>(fc2, Observable.Repeat((bool?)true, 1), Observable.Repeat(count, 1), Observable.Repeat(0, 1), Observable.Repeat(1, 1));
+
+        //    }
 
 
 

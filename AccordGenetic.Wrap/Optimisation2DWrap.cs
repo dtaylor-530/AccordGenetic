@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-namespace AccordGenetic.Wrapper
+namespace AccordGenetic.Wrap
 {
 
     //public enum Optimisation

@@ -25,9 +25,9 @@ namespace Accord.Genetic
 
 
         // optimization ranges
-        private Range _rangeX = new Range(0, 1);
-        private Range _rangeY = new Range(0, 1);
-        private Range _rangeZ = new Range(0, 1);
+        private Range _rangeX = new Accord.Range(0, 1);
+        private Range _rangeY = new Accord.Range(0, 1);
+        private Range _rangeZ = new Accord.Range(0, 1);
         // optimization mode
         private Modes mode = Modes.Maximization;
 

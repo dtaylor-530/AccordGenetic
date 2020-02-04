@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AccordGenetic.Wrapper
+namespace AccordGenetic.Wrap
 {
 
     public class UserFunction : OptimizationFunction1D
     {
-        public UserFunction() : base(new Range(0, 255)) { }
+        public UserFunction() : base(new Accord.Range(0, 255)) { }
 
         public override double OptimizationFunction(double x)
         {
@@ -23,7 +23,7 @@ namespace AccordGenetic.Wrapper
 
     public class DefaultFunction2D : OptimizationFunction2D
     {
-        public DefaultFunction2D() : base(new Range(0, 255), new Range(0, 255)) { }
+        public DefaultFunction2D() : base(new Accord.Range(0, 255), new Accord.Range(0, 255)) { }
 
         public override double OptimizationFunction(double x, double y)
         {
@@ -35,7 +35,7 @@ namespace AccordGenetic.Wrapper
     {
 
         Func<double, double, double> _func;
-        public UserFunction2D(Func<double, double, double> func) : base(new Range(0, 50), new Range(0, 50)) { _func = func; }
+        public UserFunction2D(Func<double, double, double> func) : base(new Accord.Range(0, 50), new Accord.Range(0, 50)) { _func = func; }
 
 
         public override double OptimizationFunction(double x, double y)
