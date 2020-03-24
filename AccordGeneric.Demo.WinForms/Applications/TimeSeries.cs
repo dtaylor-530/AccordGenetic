@@ -610,7 +610,7 @@ namespace SampleApp
 
                 // update list and chart
                 UpdateDataListView();
-                chart.RangeX = new Accord.Range(0, data.Length - 1);
+                //chart.RangeX = new Accord.Range(0, data.Length - 1);
                 chart.UpdateDataSeries("data", dataToShow);
                 chart.UpdateDataSeries("solution", null);
                 // set delimiters
@@ -625,13 +625,13 @@ namespace SampleApp
         {
             // window delimiter
             windowDelimiter[0, 0] = windowDelimiter[1, 0] = windowSize;
-            windowDelimiter[0, 1] = chart.RangeY.Min;
-            windowDelimiter[1, 1] = chart.RangeY.Max;
+            //windowDelimiter[0, 1] = chart.RangeY.Min;
+            //windowDelimiter[1, 1] = chart.RangeY.Max;
             chart.UpdateDataSeries("window", windowDelimiter);
             // prediction delimiter
             predictionDelimiter[0, 0] = predictionDelimiter[1, 0] = data.Length - 1 - predictionSize;
-            predictionDelimiter[0, 1] = chart.RangeY.Min;
-            predictionDelimiter[1, 1] = chart.RangeY.Max;
+            //predictionDelimiter[0, 1] = chart.RangeY.Min;
+            //predictionDelimiter[1, 1] = chart.RangeY.Max;
             chart.UpdateDataSeries("prediction", predictionDelimiter);
         }
 

@@ -501,7 +501,7 @@ namespace SampleApp
 
                 // update list and chart
                 UpdateDataListView();
-                chart.RangeX = new Accord.Range(minX, maxX);
+                //chart.RangeX = new Accord.Range(minX, maxX);
                 chart.UpdateDataSeries("data", dataToShow);
                 chart.UpdateDataSeries("solution", null);
                 // enable "Start" button
@@ -560,15 +560,18 @@ namespace SampleApp
             solutionBox.Text = string.Empty;
 
             AccordGenetic.Wrap.ApproximationWrap wrap = new AccordGenetic.Wrap.ApproximationWrap(
-               data: dataToShow, 
-              functionsSet: functionsSetBox.SelectedIndex,
-               populationSize: int.TryParse(populationSizeBox.Text, out int result1) ? Math.Max(10, Math.Min(100, result1)) : 40, 
-               geneticMethod: geneticMethodBox.SelectedIndex, 
-              selectionMethod: selectionBox.SelectedIndex, 
-              minRange:  chart.RangeX.Min,
-              lengthRange:  chart.RangeX.Length);
+                data: dataToShow,
+                functionsSet: functionsSetBox.SelectedIndex,
+                populationSize: int.TryParse(populationSizeBox.Text, out int result1)
+                    ? Math.Max(10, Math.Min(100, result1))
+                    : 40,
+                geneticMethod: geneticMethodBox.SelectedIndex,
+                selectionMethod: selectionBox.SelectedIndex,
+                      //minRange:  chart.RangeX.Min,
+                      //lengthRange:  chart.RangeX.Length);
+                minRange: 0,
+                lengthRange: 10);
 
-   
             SearchSolution(wrap);
 
 
@@ -629,7 +632,7 @@ namespace SampleApp
             SetText(currentIterationBox, kvp.Key.ToString());
 
             SetText(currentErrorBox, error.Prediction.ToString("F3"));
-            SetText(solutionBox, kvp.Value.BestSolution.ToString());
+            SetText(solutionBox, kvp.Value.BestSolution);
         }
     }
 }

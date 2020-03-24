@@ -1,0 +1,86 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Accord.Controls" Version="3.8.2-alpha" />
+    <PackageReference Include="Accord.Statistics" Version="3.8.2-alpha" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AccordGenetic.Wrap\AccordGenetic.Wrap.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Applications\Approximation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Applications\GAFormTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Applications\Optimization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Applications\SettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Applications\TimeSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Applications\Approximation.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Approximation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Applications\Optimization.resx">
+      <DependentUpon>Optimization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Applications\SettingsDialog.resx">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Applications\TimeSeries.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TimeSeries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Sample data %28approximation%29\sample1.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Sample data %28approximation%29\sample2.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Sample data %28time series%29\exponent.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Sample data %28time series%29\growing sinusoid.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Sample data %28time series%29\parabola.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Sample data %28time series%29\sigmoid.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Sample data %28time series%29\sinusoid.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

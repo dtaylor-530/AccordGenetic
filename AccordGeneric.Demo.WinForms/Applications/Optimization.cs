@@ -414,27 +414,27 @@ namespace SampleApp
         private void UpdateChart()
         {
             // update chart range
-            chart.RangeX = userFunction.Range;
+            //chart.RangeX = userFunction.Range;
 
-            double[,] data = null;
+            //double[,] data = null;
 
-            if (chart.RangeX.Length > 0)
-            {
-                // prepare data
-                data = new double[501, 2];
+            //if (chart.RangeX.Length > 0)
+            //{
+            //    // prepare data
+            //    data = new double[501, 2];
 
-                double minX = userFunction.Range.Min;
-                double length = userFunction.Range.Length;
+            //    double minX = userFunction.Range.Min;
+            //    double length = userFunction.Range.Length;
 
-                for (int i = 0; i <= 500; i++)
-                {
-                    data[i, 0] = minX + length * i / 500;
-                    data[i, 1] = userFunction.OptimizationFunction(data[i, 0]);
-                }
-            }
+            //    for (int i = 0; i <= 500; i++)
+            //    {
+            //        data[i, 0] = minX + length * i / 500;
+            //        data[i, 1] = userFunction.OptimizationFunction(data[i, 0]);
+            //    }
+            //}
 
             // update chart series
-            chart.UpdateDataSeries("function", data);
+            //chart.UpdateDataSeries("function", data);
         }
 
         // Update min value
